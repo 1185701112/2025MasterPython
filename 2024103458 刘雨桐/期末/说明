@@ -1,0 +1,30 @@
+目标
+用最少依赖在命令行实现“个人记账 + 快速统计 + 图表展示”。
+输入：一份 CSV（date,amount,category,note）
+输出：
+分类/月份汇总文本
+饼图、月柱状图、日直方图、预算折线图（存 charts/）
+年度 Markdown 报表（存 reports/）
+思路
+读取 CSV → Entry 列表（importer.py）
+保存为本地 JSON（storage.py，后续所有操作基于此文件）
+统计：单遍扫描得到分类和月份合计（analysis.py）
+可视化：用 matplotlib 画四张图（visualize.py）
+预算提醒：本月累计支出 vs 设定上限（budget.py）
+年度报表：纯 Python 拼 Markdown（report.py）
+生成数据：生成随机数据方便运行演示（sample_data.py)
+命令行入口 main.py 通过 argparse 调度 import / stats / charts / budget 四个子命令。
+
+结果文件
+charts/
+    category_pie.png
+    monthly_bar.png
+    daily_hist.png
+    budget_YYYY-MM.png
+reports/
+    report_<year>.md
+today_entries.csv（随机生成的数据）
+
+一条演示指令（含随机数据生成）
+python run_demo.py
+即可在终端看到汇总，并在 charts/ 和 reports/ 目录得到所有结果文件。
